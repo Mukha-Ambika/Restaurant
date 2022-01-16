@@ -1,12 +1,8 @@
 const express = require('express');
-//const csv = require('csv-parser');
-const axios = require('axios');
-//const fs = require('fs')
 const app = express();
 const port = 3000;
-//app.use(express.static("display_zomato_restaurants"));
 
-
+//when we hit http://localhost:3000 we will recieve request here and we are sending HtmlToSendAjax.html to browser
 app.get('/',(req,res)=>{
       res.sendFile('/Users/mukhaambika/Desktop/display_zomato_restaurants/AJAX/HtmlToSendAjax.html'); 
 });

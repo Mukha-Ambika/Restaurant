@@ -2,51 +2,47 @@
 <html>
 <head>
     <title>Read data from External JSON file using JavaScript</title>
+    <!--to runAjax code at browser we have to pass this as source-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style>
-    .card{
+    /*To print cards as a grid*/
+  .card{
   display: grid;
-  /* grid-column-gap: 50px; */
   grid-template-columns: auto auto auto;
   background-color: #2196F3;
 }
 .innercardclass{
+    /*To design card*/
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 5px;
-  /* text-align: center; */
 }
 </style>
 
 </head>
 <body>
+    <!--global element which holds the cards-->
     <div class='card' id="cardclass">
       </div>
 </body>
 
 <script>
-    
-    console.log('hihihi');
+    /*Ajax code which get json code from the remote url*/
     $.ajax({
    url: "https://raw.githubusercontent.com/MehtaShruti/Zomato-Restaurants-Recommendations/master/Raw_Data/file2.json",
     type:"get",
     dataType:'json',  
     success: function(resp){
-        
-      console.log(resp,"i am data");
-     // from here
-     console.log('resp',resp);
+/*if success in getting data*/        
 let count = resp[7].results_found;
 console.log('i am count',count);
-    let arr_link=[];
-   
-for(let i=0;i<count;i++)
+/*loop to iterrate json and set content to html*/
+   for(let i=0;i<count;i++)
     {
        try{
            if(resp[7].restaurants[i].restaurant.featured_image){
-            arr_link[i]=resp[7].restaurants[i].restaurant.featured_image;
             console.log(resp[7].restaurants[i].restaurant.featured_image)
-            //js in html
+            /*set data to html code in a variable*/
             let content=`
                 <div class='innercardclass' id='innercard' style="margin:1rem;padding:1rem;border:1px solid black;height:auto;width:250px;">
                 <img src=${resp[7].restaurants[i].restaurant.featured_image} alt="Girl in a jacket" width="250" height="250">
@@ -57,59 +53,21 @@ for(let i=0;i<count;i++)
                 <p><b>Rating: </b>${resp[7].restaurants[i].restaurant.user_rating.rating_text}</p>
                 </div></div>`
                 
-            //     <div id='innercard' style="margin:1rem;padding:1rem;border:1px solid black;height:400px;width:250px;">
-            //     <img src=${resp[7].restaurants[i+1].restaurant.featured_image} alt="Girl in a jacket" width="250" height="250">
-            //     <div class="container">
-            //     <p><b>${resp[7].restaurants[i+1].restaurant.name}</b>    
-            //     <p id="loc"><b>city: </b>${resp[7].restaurants[i+1].restaurant.location.city}</p>
-            //     <p><b>Address: </b>${resp[7].restaurants[i+1].restaurant.location.address}</p>
-            //     <p><b>Rating: </b>${resp[7].restaurants[i+1].restaurant.user_rating.rating_text}</p>
-            //     </div></div>
-                
-            //     <div id='innercard' style="margin:1rem;padding:1rem;border:1px solid black;height:400px;width:250px;">
-            //     <img src=${resp[7].restaurants[i+2].restaurant.featured_image} alt="Girl in a jacket" width="250" height="250">
-            //     <div class="container">
-            //     <p><b>${resp[7].restaurants[i+2].restaurant.name}</b>    
-            //     <p id="loc"><b>city: </b>${resp[7].restaurants[i+2].restaurant.location.city}</p>
-            //     <p><b>Address: </b>${resp[7].restaurants[i+2].restaurant.location.address}</p>
-            //     <p><b>Rating: </b>${resp[7].restaurants[i+2].restaurant.user_rating.rating_text}</p>
-            //     </div></div>
-            // i+=2;    
             console.log('content',content);            
-          //  document.getElementById('cardclass').appendChild(content); 
+           /*Append variable to global container*/ 
             document.getElementById('cardclass').innerHTML += content;            
-            //js in html
-            //if link there appends
-            // var a = document.createElement('a');
-            // var p = document.createElement('p');
-            // console.log('a start',a.href);
-            // a.href = resp[7].restaurants[i].restaurant.featured_image; // TODO: adjust this
-            // console.log('p',resp[7].restaurants[i].restaurant.location.city);
-            // var textNode = document.createTextNode(resp[7].restaurants[i].restaurant.location.city); 
-            // console.log('textNode',textNode);
-            // p.appendChild(textNode);
-            // var img = document.createElement('img');
-            // img.src = resp[7].restaurants[i].restaurant.featured_image;//images[i];
-            // a.appendChild(img);
-            // document.getElementById('myImg').appendChild(a);
-            // document.getElementById('loc').appendChild(p);
-            // console.log('a end',a.href);
-        //till here
            }
        }catch(e)
        {
-          // console.log('ntg');
+           console.log(e,'exception');
        }    
     }
-    
-      //till here
     },
     error:function() {
+        /*if fsiled in getting data*/
       console.log("err");
     }
 });
 
-
-   
 </script>
 </html>
